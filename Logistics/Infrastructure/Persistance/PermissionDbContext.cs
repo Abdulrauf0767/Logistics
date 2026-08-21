@@ -1,4 +1,4 @@
-﻿using Logistics.Domain.Entities.PermissionEntities;
+﻿    using Logistics.Domain.Entities.PermissionEntities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Logistics.Infrastructure.Persistance

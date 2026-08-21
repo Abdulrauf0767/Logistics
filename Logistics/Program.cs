@@ -1,14 +1,23 @@
+using Logistics.Application.Services;
 using Logistics.Domain.Authorization.Permissions;
+using Logistics.Domain.Interfaces.RoleInterfaces;
 using Logistics.Infrastructure.Persistance;
+using Logistics.Infrastructure.Persistance.RoleDbContext;
+using Logistics.Infrastructure.Repositories.RoleRepository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<PermissionDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Connection")));
+builder.Services.AddDbContext<RoleDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Connection")));
 builder.Services.AddControllers();
+// register interfaces
+builder.Services.AddScoped<IRoleRepository,RoleRepository>();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+// register services
+builder.Services.AddScoped<RoleService>();
 
 var app = builder.Build();
 
