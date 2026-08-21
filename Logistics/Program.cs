@@ -1,16 +1,14 @@
 using Logistics.Application.Services;
 using Logistics.Domain.Authorization.Permissions;
 using Logistics.Domain.Interfaces.RoleInterfaces;
-using Logistics.Infrastructure.Persistance;
-using Logistics.Infrastructure.Persistance.RoleDbContext;
+using Logistics.Infrastructure.Persistance.ApplicationDbContext;
 using Logistics.Infrastructure.Repositories.RoleRepository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddDbContext<PermissionDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Connection")));
-builder.Services.AddDbContext<RoleDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Connection")));
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Connection")));
 builder.Services.AddControllers();
 // register interfaces
 builder.Services.AddScoped<IRoleRepository,RoleRepository>();
@@ -30,7 +28,7 @@ app.MapControllers();
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider
-        .GetRequiredService<PermissionDbContext>();
+        .GetRequiredService<ApplicationDbContext>();
 
     await PermissionSeeder.SeedAsync(dbContext);
 }

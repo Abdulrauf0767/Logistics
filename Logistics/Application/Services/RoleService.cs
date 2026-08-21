@@ -1,7 +1,6 @@
 ﻿using Logistics.Application.DTOS.RoleDTO;
 using Logistics.Domain.Entities.RoleEntities;
 using Logistics.Domain.Interfaces.RoleInterfaces;
-using Logistics.Infrastructure.Persistance.RoleDbContext;
 
 namespace Logistics.Application.Services
 {
@@ -19,7 +18,7 @@ namespace Logistics.Application.Services
             if (exists)
             {
                 throw new InvalidOperationException($"Role {dto.RoleName} already exists");  
-            }
+            }                                                            
             var newRole = new RoleEntity(dto.RoleName, dto.RoleDescription ?? "");
             await _roleRepository.AddRoleAsync(newRole);
             await _roleRepository.SaveChangesAsync();

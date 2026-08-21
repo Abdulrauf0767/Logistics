@@ -1,12 +1,12 @@
 ﻿using Logistics.Domain.Entities.PermissionEntities;
-using Logistics.Infrastructure.Persistance;
+using Logistics.Infrastructure.Persistance.ApplicationDbContext;
 using Microsoft.EntityFrameworkCore;
 
 namespace Logistics.Domain.Authorization.Permissions
 {
     public static class PermissionSeeder
     {
-        public static async Task SeedAsync(PermissionDbContext dbContext)
+        public static async Task SeedAsync(ApplicationDbContext dbContext)
         {
             if (await dbContext.Permissions.AnyAsync())
                 return;

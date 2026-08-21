@@ -1,13 +1,13 @@
 ﻿using Logistics.Domain.Entities.RoleEntities;
 using Logistics.Domain.Interfaces.RoleInterfaces;
-using Logistics.Infrastructure.Persistance.RoleDbContext;
+using Logistics.Infrastructure.Persistance.ApplicationDbContext;
 using Microsoft.EntityFrameworkCore;
 namespace Logistics.Infrastructure.Repositories.RoleRepository
 {
     public class RoleRepository : IRoleRepository
     {
-        private readonly RoleDbContext _roleDb;
-        public RoleRepository(RoleDbContext roleDb) { 
+        private readonly ApplicationDbContext _roleDb;
+        public RoleRepository(ApplicationDbContext roleDb) { 
             _roleDb = roleDb;
         }
         // get all roles from db

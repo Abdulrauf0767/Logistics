@@ -6,14 +6,13 @@
         public string RoleName { get; private set; } = null!;
         public string RoleDescription { get; private set; } = string.Empty;
         public DateTime CreatedAt { get; private set; }
-        public DateTime UpdatedAt { get; private set; }
+        public DateTime UpdatedAt { get; internal set; }
         private RoleEntity() { }
         public RoleEntity(string roleName,string description)
         {
             RoleName = roleName;
             RoleDescription = description;
             CreatedAt = DateTime.UtcNow;
-            UpdatedAt = DateTime.UtcNow;
         }
     }
 }
