@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Logistics.Migrations.RoleDb
 {
     /// <inheritdoc />
-    public partial class InitialRoleMigration : Migration
+    public partial class RolesInitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

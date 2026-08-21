@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Logistics.Migrations.RoleDb
 {
     [DbContext(typeof(RoleDbContext))]
-    [Migration("20260821060529_InitialRoleMigration")]
-    partial class InitialRoleMigration
+    [Migration("20260821092536_RolesInitialMigration")]
+    partial class RolesInitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

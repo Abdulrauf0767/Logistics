@@ -34,5 +34,14 @@ namespace Logistics.Infrastructure.Repositories.RoleRepository
         public void DeleteRole(RoleEntity role) {
         _roleDb.Roles.Remove(role);
         }
+        // check exists name 
+        public async Task<bool> ExistsByName(string name) { 
+            return await _roleDb.Roles.AsNoTracking().AnyAsync(r => r.RoleName.ToLower() == name.ToLower());
+        }
+        // save changes
+        public async Task SaveChangesAsync ()
+        {
+            await _roleDb.SaveChangesAsync();
+        }
     }
 }

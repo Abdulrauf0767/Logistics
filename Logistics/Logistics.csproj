@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Infrastructure\Data\" />
     <Folder Include="Middlewares\" />
   </ItemGroup>
 

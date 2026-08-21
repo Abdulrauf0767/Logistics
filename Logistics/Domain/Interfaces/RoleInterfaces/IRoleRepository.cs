@@ -14,6 +14,10 @@ namespace Logistics.Domain.Interfaces.RoleInterfaces
         void UpdateRole (RoleEntity role);
         // interface to delete role
         void DeleteRole (RoleEntity role);
+        // check exists name
+        Task<bool> ExistsByName (string name);
+        // save changes 
+        Task SaveChangesAsync();
         
     }
 }
