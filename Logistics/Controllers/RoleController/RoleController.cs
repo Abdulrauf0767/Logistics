@@ -15,7 +15,7 @@ namespace Logistics.Controllers.RoleController
         }
         // create role method
         [HttpPost]
-        public async Task<IActionResult> CreateRole([FromBody] CreateRoleDTO dto)
+        public async Task<IActionResult> CreateRole([FromBody] CreateRoleRequest dto)
         {
             try
             {

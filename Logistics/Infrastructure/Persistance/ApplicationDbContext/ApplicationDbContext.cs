@@ -2,7 +2,6 @@
 using Logistics.Domain.Entities.RoleEntities;
 using Logistics.Domain.Entities.RolePermissionEntities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 
 namespace Logistics.Infrastructure.Persistance.ApplicationDbContext
 {
@@ -16,6 +15,40 @@ namespace Logistics.Infrastructure.Persistance.ApplicationDbContext
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                if (entityType != null)
+                {
+                    modelBuilder.Entity(entityType.ClrType).Property<DateTime>("CreatedAt");
+                    modelBuilder.Entity(entityType.ClrType).Property<DateTime>("UpdatedAt");
+                }
+            }
+        }
+        public override int SaveChanges()
+        {
+            ApplyAuditLogics();
+            return base.SaveChanges();
+        }
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            ApplyAuditLogics();
+            return base.SaveChangesAsync(cancellationToken);
+        }
+        private void ApplyAuditLogics()
+        {
+            var entries = ChangeTracker.Entries().Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
+            var currentTime = DateTime.UtcNow;
+            foreach (var entry in entries)
+            {
+                if (entry.Metadata.FindProperty("CreatedAt") != null )
+                {
+                    if (entry.State == EntityState.Added)
+                    {
+                        entry.Property("CreatedAt").CurrentValue = currentTime;
+                    }
+                    entry.Property("UpdatedAt").CurrentValue = currentTime;
+                }
+            }
         }
     }
 }
