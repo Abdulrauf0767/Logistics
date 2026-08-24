@@ -1,6 +1,6 @@
-﻿using Logistics.Domain.Entities.PermissionEntities;
-using Logistics.Domain.Entities.RoleEntities;
-using Logistics.Domain.Entities.RolePermissionEntities;
+﻿using Logistics.Domain.Entities;
+using Logistics.Domain.Entities.PermissionEntities;
+using Logistics.Domain.Entities.RolePermissionsEntity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Logistics.Infrastructure.Persistance.ApplicationDbContext

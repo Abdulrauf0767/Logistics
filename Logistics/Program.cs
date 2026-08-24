@@ -1,33 +1,34 @@
-using Logistics.Application.Services;
+using Logistics.Application.Features;
 using Logistics.Domain.Authorization.Permissions;
 using Logistics.Domain.Interfaces.PermissionsInterface;
-using Logistics.Domain.Interfaces.RoleInterfaces;
+using Logistics.Domain.Interfaces.RoleInterface;
+using Logistics.Domain.Interfaces.RolePermissionInterface;
+using Logistics.Domain.Interfaces.UnitOfWorkInterface;
 using Logistics.Infrastructure.Persistance.ApplicationDbContext;
-using Logistics.Infrastructure.Repositories.RoleRepository;
+using Logistics.Infrastructure.Repositories;
 using Logistics.Infrastructure.Repositories.PermissionRepository;
-using Microsoft.EntityFrameworkCore;
-using Logistics.Domain.Interfaces.RolePermissionsInterface;
 using Logistics.Infrastructure.Repositories.RolePermissionRepository;
-using Logistics.Application.Services.RolePermissionService;
+using Logistics.Infrastructure.Repositories.RoleRepository;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Connection")));
 builder.Services.AddControllers();
-// register interfaces
-builder.Services.AddScoped<IRoleRepository,RoleRepository>();
-builder.Services.AddScoped<IPermissionRepository,PermissionRepository>();
-builder.Services.AddScoped<IRolePermissionsRepository,RolePermissionRepository>();
+builder.Services.AddProblemDetails();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
-// register services
-builder.Services.AddScoped<RoleService>();
-builder.Services.AddScoped<RolePermissionService>();
+// register interfaces
+builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
+builder.Services.AddScoped<IUnitOfWorkRepository, UnitOfWorkRepository>();
+builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+builder.Services.AddScoped<IRolePermissionRepository, RolePermissionRepository>();
+builder.Services.AddApplicationServices();
 
 var app = builder.Build();
 
-
+app.UseExceptionHandler();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

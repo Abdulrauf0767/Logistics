@@ -1,5 +1,6 @@
-﻿using Logistics.Application.DTOS.RoleDTO;
-using Logistics.Application.Services;
+﻿using Logistics.Application.Features.Roles.Command;
+using Logistics.Application.Requests.CreateRoleRequest;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Logistics.Controllers.RoleController
@@ -8,22 +9,42 @@ namespace Logistics.Controllers.RoleController
     [Route("api/[controller]")]
     public class RoleController : ControllerBase
     {
-        private readonly RoleService _roleService;
-        public RoleController (RoleService roleService)
+        private readonly IMediator _mediator;
+        public RoleController (IMediator mediator)
         {
-            _roleService = roleService;
+            _mediator = mediator;
         }
-        // create role method
         [HttpPost]
-        public async Task<IActionResult> CreateRole([FromBody] CreateRoleRequest dto)
+        public async Task<IActionResult> CreateRole([FromBody] CreateRoleRequest request)
         {
             try
             {
-                await _roleService.CreateRolesAsync (dto);
-                return StatusCode(201, new { message = "Role successfully created!" });
+                var command = new CreateRoleCommand(
+                    request.RoleName,
+                    request.Description,
+                    request.PermissionIds
+                );
+
+                var roleId = await _mediator.Send(command);
+                return Ok(new { Success = true, RoleId = roleId });
             }
-            catch (Exception ex) {
-                return StatusCode(500, new { message = "Server error", error = ex.Message });
+            catch (BadHttpRequestException ex)
+            {
+                return BadRequest(new
+                {
+                    Status = StatusCodes.Status400BadRequest,
+                    Title = "Validation Error",
+                    Detail = ex.Message
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    Status = StatusCodes.Status500InternalServerError,
+                    Title = "Internal Server Error",
+                    Detail = ex.Message
+                });
             }
         }
     }

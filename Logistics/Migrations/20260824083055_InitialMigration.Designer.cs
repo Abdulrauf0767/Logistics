@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Logistics.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260822080549_initialMigration")]
-    partial class initialMigration
+    [Migration("20260824083055_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -52,7 +52,7 @@ namespace Logistics.Migrations
                     b.ToTable("Permissions");
                 });
 
-            modelBuilder.Entity("Logistics.Domain.Entities.RoleEntities.RoleEntity", b =>
+            modelBuilder.Entity("Logistics.Domain.Entities.RoleEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -63,27 +63,26 @@ namespace Logistics.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("RoleDescription")
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("RoleName")
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RoleName")
-                        .IsUnique();
-
-                    b.ToTable("Roles", (string)null);
+                    b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("Logistics.Domain.Entities.RolePermissionEntities.RolePermissionEntity", b =>
+            modelBuilder.Entity("Logistics.Domain.Entities.RolePermissionsEntity.RolePermissionEntity", b =>
                 {
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
@@ -104,7 +103,7 @@ namespace Logistics.Migrations
                     b.ToTable("RolePermissions", (string)null);
                 });
 
-            modelBuilder.Entity("Logistics.Domain.Entities.RolePermissionEntities.RolePermissionEntity", b =>
+            modelBuilder.Entity("Logistics.Domain.Entities.RolePermissionsEntity.RolePermissionEntity", b =>
                 {
                     b.HasOne("Logistics.Domain.Entities.PermissionEntities.PermissionEntity", null)
                         .WithMany()
@@ -112,7 +111,7 @@ namespace Logistics.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Logistics.Domain.Entities.RoleEntities.RoleEntity", null)
+                    b.HasOne("Logistics.Domain.Entities.RoleEntity", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)

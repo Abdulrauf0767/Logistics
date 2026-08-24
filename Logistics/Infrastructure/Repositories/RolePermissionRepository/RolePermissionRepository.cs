@@ -1,11 +1,11 @@
-﻿using Logistics.Domain.Entities.RolePermissionEntities;
-using Logistics.Domain.Interfaces.RolePermissionsInterface;
+﻿using Logistics.Domain.Entities.RolePermissionsEntity;
+using Logistics.Domain.Interfaces.RolePermissionInterface;
 using Logistics.Infrastructure.Persistance.ApplicationDbContext;
 using Microsoft.EntityFrameworkCore;
 
 namespace Logistics.Infrastructure.Repositories.RolePermissionRepository
 {
-    public class RolePermissionRepository : IRolePermissionsRepository
+    public class RolePermissionRepository : IRolePermissionRepository
     {
         private readonly ApplicationDbContext _dbContext;
 

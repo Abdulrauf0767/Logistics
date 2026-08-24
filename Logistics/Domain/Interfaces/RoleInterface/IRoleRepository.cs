@@ -1,6 +1,6 @@
-﻿using Logistics.Domain.Entities.RoleEntities;
+﻿using Logistics.Domain.Entities;
 
-namespace Logistics.Domain.Interfaces.RoleInterfaces
+namespace Logistics.Domain.Interfaces.RoleInterface
 {
     public interface IRoleRepository
     {
@@ -9,15 +9,14 @@ namespace Logistics.Domain.Interfaces.RoleInterfaces
         // get single role by id interface
         Task<RoleEntity?> GetRoleById(int id);
         // interface to create role 
-        Task AddRoleAsync (RoleEntity role);
+        Task AddRoleAsync(RoleEntity role);
         // interface to update role
-        void UpdateRole (RoleEntity role);
+        void UpdateRole(RoleEntity role);
         // interface to delete role
-        void DeleteRole (RoleEntity role);
+        void DeleteRole(RoleEntity role);
         // check exists name
-        Task<bool> ExistsByName (string name);
+        Task<bool> ExistsByName(string name);
         // save changes 
         Task SaveChangesAsync();
-        
     }
 }
