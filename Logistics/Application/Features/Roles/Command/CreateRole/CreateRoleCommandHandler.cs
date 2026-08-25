@@ -1,13 +1,13 @@
 ﻿using Logistics.Application.Features.Roles.Command;
 using Logistics.Domain.Entities;
 using Logistics.Domain.Entities.RolePermissionsEntity;
-using Logistics.Domain.Interfaces.PermissionsInterface;
-using Logistics.Domain.Interfaces.RoleInterface;
-using Logistics.Domain.Interfaces.RolePermissionInterface;
+using Logistics.Domain.Interfaces.Roles.PermissionsInterface;
+using Logistics.Domain.Interfaces.Roles.RoleInterface;
+using Logistics.Domain.Interfaces.Roles.RolePermissionInterface;
 using Logistics.Domain.Interfaces.UnitOfWorkInterface;
-using Logistics.Infrastructure.Repositories.RolePermissionRepository;
+using Logistics.Infrastructure.Repositories.Roles.RolePermissionRepository;
 using MediatR;
-using Microsoft.AspNetCore.Http; 
+using Microsoft.AspNetCore.Http;
 using HttpBadHttpRequestException = Microsoft.AspNetCore.Http.BadHttpRequestException;
 
 namespace Logistics.Application.Features.Roles.CommandHandler

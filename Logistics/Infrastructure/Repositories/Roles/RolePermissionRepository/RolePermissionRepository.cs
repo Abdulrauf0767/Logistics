@@ -1,9 +1,9 @@
 ﻿using Logistics.Domain.Entities.RolePermissionsEntity;
-using Logistics.Domain.Interfaces.RolePermissionInterface;
+using Logistics.Domain.Interfaces.Roles.RolePermissionInterface;
 using Logistics.Infrastructure.Persistance.ApplicationDbContext;
 using Microsoft.EntityFrameworkCore;
 
-namespace Logistics.Infrastructure.Repositories.RolePermissionRepository
+namespace Logistics.Infrastructure.Repositories.Roles.RolePermissionRepository
 {
     public class RolePermissionRepository : IRolePermissionRepository
     {
@@ -27,7 +27,6 @@ namespace Logistics.Infrastructure.Repositories.RolePermissionRepository
         public async Task AddRolePermissionsAsync(RolePermissionEntity rp)
         {
             await _dbContext.Set<RolePermissionEntity>().AddAsync(rp);
-            // Note: Data yahan sirf memory (Change Tracker) mein add hota hai
         }
 
         // 3. DELETE ROLE PERMISSIONS (Future mein kaam aayega jab permissions remove karoge)
@@ -42,10 +41,5 @@ namespace Logistics.Infrastructure.Repositories.RolePermissionRepository
             _dbContext.Set<RolePermissionEntity>().Update(rp);
         }
 
-        // 5. SAVE CHANGES 
-        public async Task SaveChangesAsync()
-        {
-            await _dbContext.SaveChangesAsync();
-        }
     }
 }

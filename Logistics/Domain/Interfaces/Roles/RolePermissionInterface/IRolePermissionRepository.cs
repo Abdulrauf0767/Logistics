@@ -1,6 +1,6 @@
 ﻿using Logistics.Domain.Entities.RolePermissionsEntity;
 
-namespace Logistics.Domain.Interfaces.RolePermissionInterface
+namespace Logistics.Domain.Interfaces.Roles.RolePermissionInterface
 {
     public interface IRolePermissionRepository
     {
@@ -12,7 +12,5 @@ namespace Logistics.Domain.Interfaces.RolePermissionInterface
         public void UpdateRolePermissions(RolePermissionEntity rp);
         // check already assigned permissions
         Task<List<int>> GetAlreadyAssignedPermissionIdsAsync(int roleId, List<int> permissionIds);
-        // save changes
-        Task SaveChangesAsync();
     }
 }

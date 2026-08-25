@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Logistics.Application.Requests.CreateRoleRequest
+namespace Logistics.Application.Requests.Roles.CreateRoleRequest
 {
     public class CreateRoleRequest
     {

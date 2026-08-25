@@ -1,7 +1,8 @@
 ﻿using Logistics.Application.Features.Roles.Command;
-using Logistics.Application.Requests.CreateRoleRequest;
+using Logistics.Application.Requests.Roles.CreateRoleRequest;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using static Logistics.Application.Features.Roles.Queries.GetAllRoles.GetAllRolesCommand;
 
 namespace Logistics.Controllers.RoleController
 {
@@ -46,6 +47,15 @@ namespace Logistics.Controllers.RoleController
                     Detail = ex.Message
                 });
             }
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetAllRoles(CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(
+                new GetAllRolesQuery(),
+                cancellationToken);
+
+            return Ok(result);
         }
     }
 }

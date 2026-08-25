@@ -1,5 +1,5 @@
 ﻿using Logistics.Domain.Entities.PermissionEntities;
-using Logistics.Domain.Interfaces.PermissionsInterface;
+using Logistics.Domain.Interfaces.Roles.PermissionsInterface;
 
 namespace Logistics.Domain.Authorization.Permissions
 {

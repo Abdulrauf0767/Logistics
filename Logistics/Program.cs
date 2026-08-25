@@ -1,14 +1,14 @@
 using Logistics.Application.Features;
 using Logistics.Domain.Authorization.Permissions;
-using Logistics.Domain.Interfaces.PermissionsInterface;
-using Logistics.Domain.Interfaces.RoleInterface;
-using Logistics.Domain.Interfaces.RolePermissionInterface;
+using Logistics.Domain.Interfaces.Roles.PermissionsInterface;
+using Logistics.Domain.Interfaces.Roles.RoleInterface;
+using Logistics.Domain.Interfaces.Roles.RolePermissionInterface;
 using Logistics.Domain.Interfaces.UnitOfWorkInterface;
 using Logistics.Infrastructure.Persistance.ApplicationDbContext;
 using Logistics.Infrastructure.Repositories;
-using Logistics.Infrastructure.Repositories.PermissionRepository;
-using Logistics.Infrastructure.Repositories.RolePermissionRepository;
-using Logistics.Infrastructure.Repositories.RoleRepository;
+using Logistics.Infrastructure.Repositories.Roles.PermissionRepository;
+using Logistics.Infrastructure.Repositories.Roles.RolePermissionRepository;
+using Logistics.Infrastructure.Repositories.Roles.RoleRepository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

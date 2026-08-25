@@ -1,9 +1,9 @@
 ﻿using Logistics.Domain.Entities.PermissionEntities;
-using Logistics.Domain.Interfaces.PermissionsInterface;
+using Logistics.Domain.Interfaces.Roles.PermissionsInterface;
 using Logistics.Infrastructure.Persistance.ApplicationDbContext;
 using Microsoft.EntityFrameworkCore;
 
-namespace Logistics.Infrastructure.Repositories.PermissionRepository
+namespace Logistics.Infrastructure.Repositories.Roles.PermissionRepository
 {
     public class PermissionRepository : IPermissionRepository
     {
@@ -16,22 +16,12 @@ namespace Logistics.Infrastructure.Repositories.PermissionRepository
         {
             await _dbContext.Permissions.AddAsync(permission);
         }
-        // get all permissions 
-        public async Task<IEnumerable<PermissionEntity>> GetPermissionsAsync()
-        {
-            return await _dbContext.Permissions.ToListAsync();
-        }
         // check existing names
         public async Task<List<string>> GetExistingNamesAsync()
         {
             return await _dbContext.Permissions
                 .Select(p => p.Name)
                 .ToListAsync();
-        }
-        // get single permission
-        public async Task<PermissionEntity?> GetPermissionByIdAsync(int id)
-        {
-            return await _dbContext.Permissions.FindAsync(id);
         }
         // bulk validation to check new permissions while creating
         public async Task<int> GetCountByIdAsync(List<int> ids)

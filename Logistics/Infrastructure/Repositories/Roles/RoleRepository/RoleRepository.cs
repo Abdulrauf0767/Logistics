@@ -1,8 +1,8 @@
 ﻿using Logistics.Domain.Entities;
-using Logistics.Domain.Interfaces.RoleInterface;
+using Logistics.Domain.Interfaces.Roles.RoleInterface;
 using Logistics.Infrastructure.Persistance.ApplicationDbContext;
 using Microsoft.EntityFrameworkCore;
-namespace Logistics.Infrastructure.Repositories.RoleRepository
+namespace Logistics.Infrastructure.Repositories.Roles.RoleRepository
 {
     public class RoleRepository : IRoleRepository
     {
@@ -11,16 +11,7 @@ namespace Logistics.Infrastructure.Repositories.RoleRepository
         {
             _roleDb = roleDb;
         }
-        // get all roles from db
-        public async Task<IEnumerable<RoleEntity>> GetRolesAsync()
-        {
-            return await _roleDb.Roles.AsNoTracking().ToListAsync();
-        }
-        // get role by id
-        public async Task<RoleEntity?> GetRoleById(int id)
-        {
-            return await _roleDb.Roles.FindAsync(id);
-        }
+        
         // create role 
         public async Task AddRoleAsync(RoleEntity role)
         {
@@ -40,11 +31,6 @@ namespace Logistics.Infrastructure.Repositories.RoleRepository
         public async Task<bool> ExistsByName(string name)
         {
             return await _roleDb.Roles.AsNoTracking().AnyAsync(r => r.Name.ToLower() == name.ToLower());
-        }
-        // save changes
-        public async Task SaveChangesAsync()
-        {
-            await _roleDb.SaveChangesAsync();
         }
     }
 }
