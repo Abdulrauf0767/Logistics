@@ -3,6 +3,7 @@ using Logistics.Application.Requests.Roles.CreateRoleRequest;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using static Logistics.Application.Features.Roles.Queries.GetAllRoles.GetAllRolesCommand;
+using static Logistics.Application.Features.Roles.Queries.GetRoleById.GetRoleByIdCommand;
 
 namespace Logistics.Controllers.RoleController
 {
@@ -53,6 +54,15 @@ namespace Logistics.Controllers.RoleController
         {
             var result = await _mediator.Send(
                 new GetAllRolesQuery(),
+                cancellationToken);
+
+            return Ok(result);
+        }
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetRoleById( int id,CancellationToken cancellationToken)
+        {
+            var result = await _mediator.Send(
+                new GetRoleByIdQuery(id),
                 cancellationToken);
 
             return Ok(result);

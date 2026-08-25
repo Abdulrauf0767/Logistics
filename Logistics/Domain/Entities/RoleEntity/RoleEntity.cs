@@ -11,7 +11,7 @@
         {
             Name = name;
             Description = desciption;
-            IsActive = false;
+            IsActive = true;
         }
     }
 }
