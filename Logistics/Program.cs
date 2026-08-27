@@ -9,6 +9,7 @@ using Logistics.Infrastructure.Repositories;
 using Logistics.Infrastructure.Repositories.Roles.PermissionRepository;
 using Logistics.Infrastructure.Repositories.Roles.RolePermissionRepository;
 using Logistics.Infrastructure.Repositories.Roles.RoleRepository;
+using Logistics.Middlewares.ApiKeyMiddlware;
 using Logistics.Middlewares.ExceptionHandlingMiddleware;
 using Microsoft.EntityFrameworkCore;
 
@@ -29,6 +30,7 @@ builder.Services.AddApplicationServices();
 
 var app = builder.Build();
 app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseMiddleware<ApiKeyMiddleware>();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
