@@ -22,8 +22,6 @@ namespace Logistics.Controllers.RoleController
         [HttpPost]
         public async Task<IActionResult> CreateRole([FromBody] CreateRoleRequest request)
         {
-            try
-            {
                 var command = new CreateRoleCommand(
                     request.RoleName,
                     request.Description,
@@ -33,25 +31,7 @@ namespace Logistics.Controllers.RoleController
                 var roleId = await _mediator.Send(command);
                 return Ok(new { Success = true, RoleId = roleId });
             }
-            catch (BadHttpRequestException ex)
-            {
-                return BadRequest(new
-                {
-                    Status = StatusCodes.Status400BadRequest,
-                    Title = "Validation Error",
-                    Detail = ex.Message
-                });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new
-                {
-                    Status = StatusCodes.Status500InternalServerError,
-                    Title = "Internal Server Error",
-                    Detail = ex.Message
-                });
-            }
-        }
+              
         [HttpGet]
         public async Task<IActionResult> GetAllRoles(CancellationToken cancellationToken)
         {
@@ -73,8 +53,7 @@ namespace Logistics.Controllers.RoleController
         [HttpPut("{id:int}")]
         public async Task<IActionResult> UpdateRole([FromRoute] int id, [FromBody] UpdateRoleRequest request)
         {
-            try
-            {
+           
                 var command = new UpdateRoleCommand(
                     id,
                     request.RoleName,
@@ -85,55 +64,15 @@ namespace Logistics.Controllers.RoleController
 
                 var updatedRoleId = await _mediator.Send(command);
                 return Ok(new { Success = true, RoleId = updatedRoleId, Message = "Role updated successfully." });
-            }
-            catch (BadHttpRequestException ex)
-            {
-                return BadRequest(new
-                {
-                    Status = StatusCodes.Status400BadRequest,
-                    Title = "Validation Error",
-                    Detail = ex.Message
-                });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new
-                {
-                    Status = StatusCodes.Status500InternalServerError,
-                    Title = "Internal Server Error",
-                    Detail = ex.Message
-                });
-            }
         }
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteRole([FromRoute] int id)
         {
-            try
-            {
                 var command = new DeleteRoleCommand(id);
                 var result = await _mediator.Send(command);
 
                 return Ok(new { Success = result, Message = "Role deleted successfully." });
             }
-            catch (BadHttpRequestException ex)
-            {
-                return BadRequest(new
-                {
-                    Status = StatusCodes.Status400BadRequest,
-                    Title = "Deletion Error",
-                    Detail = ex.Message
-                });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new
-                {
-                    Status = StatusCodes.Status500InternalServerError,
-                    Title = "Internal Server Error",
-                    Detail = ex.Message
-                });
-            }
-        }
 
     }
 }

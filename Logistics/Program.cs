@@ -9,6 +9,7 @@ using Logistics.Infrastructure.Repositories;
 using Logistics.Infrastructure.Repositories.Roles.PermissionRepository;
 using Logistics.Infrastructure.Repositories.Roles.RolePermissionRepository;
 using Logistics.Infrastructure.Repositories.Roles.RoleRepository;
+using Logistics.Middlewares.ExceptionHandlingMiddleware;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,8 +28,7 @@ builder.Services.AddScoped<IRolePermissionRepository, RolePermissionRepository>(
 builder.Services.AddApplicationServices();
 
 var app = builder.Build();
-
-app.UseExceptionHandler();
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
