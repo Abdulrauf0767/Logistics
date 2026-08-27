@@ -29,6 +29,7 @@ builder.Services.AddScoped<IRolePermissionRepository, RolePermissionRepository>(
 builder.Services.AddApplicationServices();
 
 var app = builder.Build();
+// register middlewares
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseMiddleware<ApiKeyMiddleware>();
 app.UseHttpsRedirection();
