@@ -40,6 +40,11 @@ namespace Logistics.Infrastructure.Repositories.Roles.RolePermissionRepository
         {
             _dbContext.Set<RolePermissionEntity>().Update(rp);
         }
-
+        public async Task<List<RolePermissionEntity>> GetByRoleIdAsync(int roleId)
+        {
+            return await _dbContext.Set<RolePermissionEntity>()
+                .Where(rp => rp.RoleId == roleId)
+                .ToListAsync();
+        }
     }
 }

@@ -12,5 +12,6 @@ namespace Logistics.Domain.Interfaces.Roles.RolePermissionInterface
         public void UpdateRolePermissions(RolePermissionEntity rp);
         // check already assigned permissions
         Task<List<int>> GetAlreadyAssignedPermissionIdsAsync(int roleId, List<int> permissionIds);
+        Task<List<RolePermissionEntity>> GetByRoleIdAsync(int roleId);
     }
 }

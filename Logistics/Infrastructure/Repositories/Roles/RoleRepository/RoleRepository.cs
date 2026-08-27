@@ -32,5 +32,9 @@ namespace Logistics.Infrastructure.Repositories.Roles.RoleRepository
         {
             return await _roleDb.Roles.AsNoTracking().AnyAsync(r => r.Name.ToLower() == name.ToLower());
         }
+        public async Task<RoleEntity?> GetByIdAsync(int id)
+        {
+            return await _roleDb.Roles.FirstOrDefaultAsync(r => r.Id == id);
+        }
     }
 }

@@ -12,6 +12,13 @@
             Name = name;
             Description = desciption;
             IsActive = true;
+
+        }
+        public void Update(string name, string description,bool isActive)
+        {
+            Name = name;
+            Description = description;
+            IsActive = isActive;
         }
     }
 }

@@ -1,5 +1,8 @@
 ﻿using Logistics.Application.Features.Roles.Command;
+using Logistics.Application.Features.Roles.Command.DeleteRole;
+using Logistics.Application.Features.Roles.Command.UpdateRole;
 using Logistics.Application.Requests.Roles.CreateRoleRequest;
+using Logistics.Application.Requests.Roles.UpdateRoleRequest;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using static Logistics.Application.Features.Roles.Queries.GetAllRoles.GetAllRolesCommand;
@@ -67,5 +70,70 @@ namespace Logistics.Controllers.RoleController
 
             return Ok(result);
         }
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> UpdateRole([FromRoute] int id, [FromBody] UpdateRoleRequest request)
+        {
+            try
+            {
+                var command = new UpdateRoleCommand(
+                    id,
+                    request.RoleName,
+                    request.Description,
+                    request.PermissionIds,
+                    request.IsActive
+                );
+
+                var updatedRoleId = await _mediator.Send(command);
+                return Ok(new { Success = true, RoleId = updatedRoleId, Message = "Role updated successfully." });
+            }
+            catch (BadHttpRequestException ex)
+            {
+                return BadRequest(new
+                {
+                    Status = StatusCodes.Status400BadRequest,
+                    Title = "Validation Error",
+                    Detail = ex.Message
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    Status = StatusCodes.Status500InternalServerError,
+                    Title = "Internal Server Error",
+                    Detail = ex.Message
+                });
+            }
+        }
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteRole([FromRoute] int id)
+        {
+            try
+            {
+                var command = new DeleteRoleCommand(id);
+                var result = await _mediator.Send(command);
+
+                return Ok(new { Success = result, Message = "Role deleted successfully." });
+            }
+            catch (BadHttpRequestException ex)
+            {
+                return BadRequest(new
+                {
+                    Status = StatusCodes.Status400BadRequest,
+                    Title = "Deletion Error",
+                    Detail = ex.Message
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new
+                {
+                    Status = StatusCodes.Status500InternalServerError,
+                    Title = "Internal Server Error",
+                    Detail = ex.Message
+                });
+            }
+        }
+
     }
 }

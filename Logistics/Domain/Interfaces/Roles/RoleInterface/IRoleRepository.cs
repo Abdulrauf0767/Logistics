@@ -11,5 +11,6 @@ namespace Logistics.Domain.Interfaces.Roles.RoleInterface
         void DeleteRole(RoleEntity role);
         // check exists name
         Task<bool> ExistsByName(string name);
+        Task<RoleEntity?> GetByIdAsync(int id);
     }
 }
