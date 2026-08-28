@@ -8,6 +8,5 @@
     public interface IJwtProvider
     {
         string GenerateToken(int userId, string roleName, List<MappingPermissions> mappingPermissions);
-        string GenerateRefreshToken();
     }
 }

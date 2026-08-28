@@ -22,6 +22,11 @@ namespace Logistics.Infrastructure.Repositories.Users
         {
             return await _context.Users.AsNoTracking().AnyAsync(u => u.RoleId == roleId);
         }
-
+        public async Task<UserEntity?> GetUserByPhoneAsync(string phone)
+        {
+            return await _context.Users
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(u => u.PhoneNumber.Trim() == phone.Trim());
+        }
     }
 }

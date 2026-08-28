@@ -7,6 +7,7 @@ namespace Logistics.Domain.Interfaces.Users
         Task CreateUserAsync(UserEntity user);
         Task <bool> IsPhoneExists(string Phone);
         Task<bool> IsUserExistsByRoleId(int roleId);
+        Task<UserEntity?> GetUserByPhoneAsync(string phone);
 
     }
 }
