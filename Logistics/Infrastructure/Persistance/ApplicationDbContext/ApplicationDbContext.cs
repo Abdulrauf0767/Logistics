@@ -1,6 +1,7 @@
 ﻿using Logistics.Domain.Entities;
 using Logistics.Domain.Entities.PermissionEntities;
 using Logistics.Domain.Entities.RolePermissionsEntity;
+using Logistics.Domain.Entities.UserEntity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Logistics.Infrastructure.Persistance.ApplicationDbContext
@@ -11,6 +12,7 @@ namespace Logistics.Infrastructure.Persistance.ApplicationDbContext
         public DbSet<PermissionEntity> Permissions =>  Set <PermissionEntity > ();
         public DbSet<RoleEntity> Roles => Set<RoleEntity>();
         public DbSet<RolePermissionEntity> RolePermissions => Set<RolePermissionEntity>();
+        public DbSet<UserEntity> Users => Set<UserEntity>();
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
