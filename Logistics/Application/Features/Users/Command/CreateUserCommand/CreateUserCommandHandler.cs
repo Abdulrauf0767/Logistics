@@ -3,7 +3,7 @@ using Logistics.Application.Features.Users.Command.CreateUserCommand;
 using Logistics.Domain.Interfaces.Users;
 using Logistics.Domain.Interfaces.UnitOfWorkInterface;
 using Logistics.Domain.Interfaces.Roles.RoleInterface;
-using Logistics.Domain.Entities.UserEntity;
+using Logistics.Domain.Entities.UserEntities;
 namespace Logistics.Application.Features.Users.Command.CreateUserCommand
 {
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, int>

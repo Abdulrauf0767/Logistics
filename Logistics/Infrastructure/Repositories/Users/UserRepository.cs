@@ -1,4 +1,4 @@
-﻿using Logistics.Domain.Entities.UserEntity;
+﻿using Logistics.Domain.Entities.UserEntities;
 using Logistics.Domain.Interfaces.Users;
 using Logistics.Infrastructure.Persistance.ApplicationDbContext;
 using Microsoft.EntityFrameworkCore;

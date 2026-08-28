@@ -1,4 +1,4 @@
-﻿namespace Logistics.Domain.Entities.UserEntity
+﻿namespace Logistics.Domain.Entities.UserEntities
 {
     public class UserEntity
     {

@@ -13,7 +13,7 @@ namespace Logistics.Infrastructure.Persistance.Configurations.RolePermissionsCon
             builder.ToTable("RolePermissions");
             builder.HasKey(rp => new { rp.RoleId, rp.PermissionId });
             builder.HasOne<RoleEntity>().WithMany().HasForeignKey(rp => rp.RoleId).OnDelete(DeleteBehavior.Cascade);
-            builder.HasOne<PermissionEntity>().WithMany().HasForeignKey(rp => rp.PermissionId).OnDelete(DeleteBehavior.Cascade);
+            builder.HasOne(rp => rp.Permission).WithMany().HasForeignKey(rp => rp.PermissionId).OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

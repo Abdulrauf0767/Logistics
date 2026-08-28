@@ -1,4 +1,4 @@
-﻿using Logistics.Domain.Entities.UserEntity;
+﻿using Logistics.Domain.Entities.UserEntities;
 
 namespace Logistics.Domain.Interfaces.Users
 {

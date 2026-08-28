@@ -4,6 +4,7 @@ using Logistics.Infrastructure.Persistance.ApplicationDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Logistics.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260828062152_AddNavigationProperty")]
+    partial class AddNavigationProperty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,44 +50,6 @@ namespace Logistics.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Permissions");
-                });
-
-            modelBuilder.Entity("Logistics.Domain.Entities.RefreshTokenEntity.RefreshTokenEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("ExpiresAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("IpAddress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("RevokedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("TokenHash")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("RefreshTokens", (string)null);
                 });
 
             modelBuilder.Entity("Logistics.Domain.Entities.RoleEntity", b =>
@@ -138,7 +103,7 @@ namespace Logistics.Migrations
                     b.ToTable("RolePermissions", (string)null);
                 });
 
-            modelBuilder.Entity("Logistics.Domain.Entities.UserEntities.UserEntity", b =>
+            modelBuilder.Entity("Logistics.Domain.Entities.UserEntity.UserEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -176,17 +141,6 @@ namespace Logistics.Migrations
                     b.ToTable("Users", (string)null);
                 });
 
-            modelBuilder.Entity("Logistics.Domain.Entities.RefreshTokenEntity.RefreshTokenEntity", b =>
-                {
-                    b.HasOne("Logistics.Domain.Entities.UserEntities.UserEntity", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Logistics.Domain.Entities.RolePermissionsEntity.RolePermissionEntity", b =>
                 {
                     b.HasOne("Logistics.Domain.Entities.PermissionEntities.PermissionEntity", "Permission")
@@ -204,7 +158,7 @@ namespace Logistics.Migrations
                     b.Navigation("Permission");
                 });
 
-            modelBuilder.Entity("Logistics.Domain.Entities.UserEntities.UserEntity", b =>
+            modelBuilder.Entity("Logistics.Domain.Entities.UserEntity.UserEntity", b =>
                 {
                     b.HasOne("Logistics.Domain.Entities.RoleEntity", "Role")
                         .WithMany()

@@ -1,7 +1,8 @@
 ﻿using Logistics.Domain.Entities;
 using Logistics.Domain.Entities.PermissionEntities;
+using Logistics.Domain.Entities.RefreshTokenEntity;
 using Logistics.Domain.Entities.RolePermissionsEntity;
-using Logistics.Domain.Entities.UserEntity;
+using Logistics.Domain.Entities.UserEntities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Logistics.Infrastructure.Persistance.ApplicationDbContext
@@ -13,6 +14,7 @@ namespace Logistics.Infrastructure.Persistance.ApplicationDbContext
         public DbSet<RoleEntity> Roles => Set<RoleEntity>();
         public DbSet<RolePermissionEntity> RolePermissions => Set<RolePermissionEntity>();
         public DbSet<UserEntity> Users => Set<UserEntity>();
+        public DbSet<RefreshTokenEntity> RefreshTokens => Set<RefreshTokenEntity>();
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
