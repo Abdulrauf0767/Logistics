@@ -1,50 +1,52 @@
-﻿using Logistics.Domain.Entities;
-using Logistics.Domain.Entities.PermissionEntities;
-using Logistics.Domain.Entities.RefreshTokenEntity;
-using Logistics.Domain.Entities.RolePermissionsEntity;
-using Logistics.Domain.Entities.UserEntities;
+﻿using Logistics.Domain.Entities.Auth.RolesClaim;
+using Logistics.Domain.Entities.Auth.RolesEntity;
+using Logistics.Domain.Entities.Auth.UsersClaimEntity;
+using Logistics.Domain.Entities.Auth.UsersEntity;
+using Logistics.Domain.Entities.Auth.UsersLogin;
+using Logistics.Domain.Entities.Auth.UsersRole;
+using Logistics.Domain.Entities.Auth.UsersToken;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Logistics.Infrastructure.Persistance.ApplicationDbContext
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext
+        : IdentityDbContext<User, Role, int, UserClaim, UserRole, UserLogin, RoleClaim, UserToken>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
-        public DbSet<PermissionEntity> Permissions =>  Set <PermissionEntity > ();
-        public DbSet<RoleEntity> Roles => Set<RoleEntity>();
-        public DbSet<RolePermissionEntity> RolePermissions => Set<RolePermissionEntity>();
-        public DbSet<UserEntity> Users => Set<UserEntity>();
-        public DbSet<RefreshTokenEntity> RefreshTokens => Set<RefreshTokenEntity>();
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<User>().ToTable("Users");
+            modelBuilder.Entity<Role>().ToTable("Roles");
+            modelBuilder.Entity<UserRole>().ToTable("UserRoles");
+            modelBuilder.Entity<UserClaim>().ToTable("UserClaims");
+            modelBuilder.Entity<UserLogin>().ToTable("UserLogins");
+            modelBuilder.Entity<RoleClaim>().ToTable("RoleClaims");
+            modelBuilder.Entity<UserToken>().ToTable("UserTokens");
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
-            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
-            {
-                if (entityType != null)
-                {
-                    modelBuilder.Entity(entityType.ClrType).Property<DateTime>("CreatedAt");
-                    modelBuilder.Entity(entityType.ClrType).Property<DateTime>("UpdatedAt");
-                }
-            }
         }
+
         public override int SaveChanges()
         {
             ApplyAuditLogics();
             return base.SaveChanges();
         }
+
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             ApplyAuditLogics();
             return base.SaveChangesAsync(cancellationToken);
         }
+
         private void ApplyAuditLogics()
         {
             var entries = ChangeTracker.Entries().Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
             var currentTime = DateTime.UtcNow;
             foreach (var entry in entries)
             {
-                if (entry.Metadata.FindProperty("CreatedAt") != null )
+                if (entry.Metadata.FindProperty("CreatedAt") != null)
                 {
                     if (entry.State == EntityState.Added)
                     {

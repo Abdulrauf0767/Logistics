@@ -4,6 +4,7 @@ using Logistics.Infrastructure.Persistance.ApplicationDbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Logistics.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260903081354_RoleNameUniqueIndexAdd")]
+    partial class RoleNameUniqueIndexAdd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -275,7 +278,7 @@ namespace Logistics.Migrations
             modelBuilder.Entity("Logistics.Domain.Entities.Auth.RolesClaim.RoleClaim", b =>
                 {
                     b.HasOne("Logistics.Domain.Entities.Auth.RolesEntity.Role", null)
-                        .WithMany("RoleClaims")
+                        .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -321,11 +324,6 @@ namespace Logistics.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Logistics.Domain.Entities.Auth.RolesEntity.Role", b =>
-                {
-                    b.Navigation("RoleClaims");
                 });
 #pragma warning restore 612, 618
         }
