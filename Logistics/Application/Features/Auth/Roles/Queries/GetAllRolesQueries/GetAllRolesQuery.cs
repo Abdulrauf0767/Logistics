@@ -5,5 +5,5 @@ using MediatR;
 namespace Logistics.Application.Features.Auth.Roles.Queries.GetAllRolesQueries
 {
     public record GetAllRolesQuery
-    () : IRequest<List<AllRolesResponse>>;
+    (int PageSize = 10,int roleId =1) : IRequest<List<AllRolesResponse>>;
 }

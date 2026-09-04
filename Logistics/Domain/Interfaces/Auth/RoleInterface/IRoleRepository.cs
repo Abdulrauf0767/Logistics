@@ -12,7 +12,7 @@ namespace Logistics.Domain.Interfaces.Auth.RoleInterface
         Task AddPermissionToRoleAsync(RoleClaim roleClaim);
         Task<string?> GetRoleNameById (int roleId);
         Task<Role?> GetRoleByIdForUpdate (int roleId);
-        Task<AllRolesResponse?> GetRoleByIdReadOnly(int roleId);
-        Task<List<AllRolesResponse>> GetAllRolesAsync();
+        Task<GetRoleByIdResponse?> GetRoleByIdReadOnly(int roleId);
+        Task<List<AllRolesResponse>> GetAllRolesAsync(int pageSize,int RoleId);
     }
 }

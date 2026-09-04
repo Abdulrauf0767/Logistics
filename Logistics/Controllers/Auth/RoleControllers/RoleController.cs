@@ -31,10 +31,20 @@ namespace Logistics.Controllers.Auth.RoleControllers
             return Ok(new { success = true, message = "Role updated successfully!"});
         }
         [HttpGet]
-        public async Task<IActionResult> GetAllRolesAsync()
+        public async Task<IActionResult> GetAllRolesAsync([FromQuery] GetAllRolesQuery request)
         {
-            var result =await _mediator.Send(new GetAllRolesQuery());
-            return Ok(new {sucess = true, roles = result});
+            var result = await _mediator.Send(request);
+            var dynamicLastRoleId = result != null && result.Any()
+                ? result.Last().Id
+                : request.roleId;
+
+            return Ok(new
+            {
+                sucess = true,
+                LastRoleId = dynamicLastRoleId, 
+                PageSize = request.PageSize,
+                roles = result
+            });
         }
         [HttpGet("{id:int}")]
         public async Task <IActionResult> GetRoleById([FromRoute] int id)

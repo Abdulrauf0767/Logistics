@@ -4,13 +4,13 @@ using MediatR;
 
 namespace Logistics.Application.Features.Auth.Roles.Queries.GetRoleByIdQueries
 {
-    public class GetRoleByIdQueryHandler : IRequestHandler<GetRoleByIdQuery,AllRolesResponse?>
+    public class GetRoleByIdQueryHandler : IRequestHandler<GetRoleByIdQuery,GetRoleByIdResponse?>
     {
         private readonly IRoleRepository _roleRepository;
         public GetRoleByIdQueryHandler(IRoleRepository roleRepository) { 
             _roleRepository = roleRepository;
         }
-        public async Task<AllRolesResponse?> Handle(GetRoleByIdQuery request,CancellationToken cancellation) {
+        public async Task<GetRoleByIdResponse?> Handle(GetRoleByIdQuery request,CancellationToken cancellation) {
             var existsRole = await _roleRepository.ExistsRoleById(request.RoleId);
             if (!existsRole)
             {

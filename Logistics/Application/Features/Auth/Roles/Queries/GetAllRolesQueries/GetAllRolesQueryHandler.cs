@@ -14,7 +14,7 @@ namespace Logistics.Application.Features.Auth.Roles.Queries.GetAllRolesQueries
         }
         public async Task<List<AllRolesResponse>> Handle (GetAllRolesQuery request,CancellationToken cancellationToken)
         {
-            return await _roleRepository.GetAllRolesAsync();
+            return await _roleRepository.GetAllRolesAsync(request.roleId,request.PageSize);
         }
     }
 }
