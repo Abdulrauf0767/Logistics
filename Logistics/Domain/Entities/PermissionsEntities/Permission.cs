@@ -2,6 +2,7 @@
 {
     public static class Permission
     {
+
         public static class Users {
             public const string View = "Users.View";
             public const string Update = "Users.Update";

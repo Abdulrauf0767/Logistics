@@ -39,31 +39,39 @@ namespace Logistics.Infrastructure.Repositories.Auth.RolesRepository
         }
         public async Task<GetRoleByIdResponse?> GetRoleByIdReadOnly(int RoleId)
         {
-            return await _dbContext.Roles.AsNoTracking().Where(r => r.Name != "Super Admin").Select(r => new GetRoleByIdResponse
-            {
-                Id = r.Id,
-                RoleName = r.Name ?? "",
-                IsActive = r.IsActive,
-                CreatedAt = r.CreatedAt,
-                UpdatedAt = r.UpdatedAt,
-                Permissions = r.RoleClaims.Select(rc => rc.ClaimValue ?? "").ToList()
-            }).FirstOrDefaultAsync(r => r.Id == RoleId); ;
+            return await _dbContext.Roles.AsNoTracking()
+                .Where(r => r.Id == RoleId && r.Name != "Super Admin") 
+                .Select(r => new GetRoleByIdResponse
+                {
+                    Id = r.Id,
+                    RoleName = r.Name ?? "",
+                    IsActive = r.IsActive,
+                    CreatedAt = r.CreatedAt,
+                    UpdatedAt = r.UpdatedAt,
+                    Permissions = r.RoleClaims.Select(rc => rc.ClaimValue ?? "").ToList()
+                })
+                .FirstOrDefaultAsync();
         }
-        public async Task<List<AllRolesResponse>> GetAllRolesAsync( int RoleId,int pageSize)
+
+        public async Task<List<AllRolesResponse>> GetAllRolesAsync(int RoleId, int pageSize)
         {
-            if (pageSize < 1)
-            {
-                pageSize = 10;
-            }
-            return await _dbContext.Roles.AsNoTracking().Where(r => r.Id > RoleId && r.Name != "Super Admin").OrderBy(r => r.Id).Take(pageSize).AsSplitQuery().Select(r => new AllRolesResponse
-            {
-                Id =r.Id,
-                RoleName = r.Name ?? "",
-                IsActive=r.IsActive,
-                CreatedAt =r.CreatedAt,
-                UpdatedAt =r.UpdatedAt,
-                Permissions = r.RoleClaims.Select(rc => rc.ClaimValue ?? "").ToList()
-            }).ToListAsync(); 
+            if (pageSize < 1) pageSize = 10;
+
+            return await _dbContext.Roles.AsNoTracking()
+                .Where(r => r.Id > RoleId && r.Name != "Super Admin")
+                .OrderBy(r => r.Id)
+                .Take(pageSize) 
+                .Select(r => new AllRolesResponse
+                {
+                    Id = r.Id,
+                    RoleName = r.Name ?? "",
+                    IsActive = r.IsActive,
+                    CreatedAt = r.CreatedAt,
+                    UpdatedAt = r.UpdatedAt,
+                    Permissions = r.RoleClaims.Select(rc => rc.ClaimValue ?? "").ToList()
+                })
+                .ToListAsync();
         }
+
     }
 }
